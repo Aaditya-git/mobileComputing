@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SymptomActivity">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Symptoms"
+        android:textSize="24sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp" />
+
+    <!-- Symptom 1: Fever -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fever"
+        android:layout_marginTop="8dp" />
+
+    <RatingBar
+        android:id="@+id/feverRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="0" />
+
+    <!-- Symptom 2: Cough -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cough"
+        android:layout_marginTop="8dp" />
+
+    <RatingBar
+        android:id="@+id/coughRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="0" />
+
+    <!-- Symptom 3: Shortness of breath -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shortness of breath"
+        android:layout_marginTop="8dp" />
+
+    <RatingBar
+        android:id="@+id/shortnessOfBreathRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="0" />
+
+    <!-- Symptom 4: Fatigue -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fatigue"
+        android:layout_marginTop="8dp" />
+
+    <RatingBar
+        android:id="@+id/fatigueRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="0" />
+
+    <!-- Symptom 5: Muscle aches -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Muscle aches"
+        android:layout_marginTop="8dp" />
+
+    <RatingBar
+        android:id="@+id/muscleAchesRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="0" />
+
+    <!-- Symptom 6: Headache -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Headache"
+        android:layout_marginTop="8dp" />
+
+    <RatingBar
+        android:id="@+id/headacheRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="0" />
+
+    <!-- Symptom 7: Sore throat -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sore throat"
+        android:layout_marginTop="8dp" />
+
+    <RatingBar
+        android:id="@+id/soreThroatRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="0" />
+
+    <!-- Symptom 8: Loss of taste or smell -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loss of taste or smell"
+        android:layout_marginTop="8dp" />
+
+    <RatingBar
+        android:id="@+id/lossOfTasteOrSmellRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="0" />
+
+    <!-- Symptom 9: Congestion -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Congestion"
+        android:layout_marginTop="8dp" />
+
+    <RatingBar
+        android:id="@+id/congestionRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="0" />
+
+    <!-- Symptom 10: Nausea -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nausea"
+        android:layout_marginTop="8dp" />
+
+    <RatingBar
+        android:id="@+id/nauseaRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="0" />
+
+    <Button
+        android:id="@+id/uploadButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="UPLOAD SYMPTOMS"
+        android:layout_marginTop="16dp" />
+
+  </LinearLayout>
+</ScrollView>
