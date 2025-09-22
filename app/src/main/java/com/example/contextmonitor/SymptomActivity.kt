@@ -54,4 +54,4 @@ class SymptomActivity : AppCompatActivity() {
             }
         }
     }
-}
+}//added a change

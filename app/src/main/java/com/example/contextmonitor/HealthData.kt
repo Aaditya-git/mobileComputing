@@ -2,7 +2,7 @@ package com.example.contextmonitor
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
+//added a change
 @Entity(tableName = "health_data")
 data class HealthData(
     @PrimaryKey(autoGenerate = true)

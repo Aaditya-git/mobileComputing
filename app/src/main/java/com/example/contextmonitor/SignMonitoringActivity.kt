@@ -89,7 +89,7 @@ class SignMonitoringActivity : AppCompatActivity() {
                     checkNextButton(nextButton)
                 }
             }
-        }
+        }//added a change
 
         nextButton.setOnClickListener {
             lifecycleScope.launch {

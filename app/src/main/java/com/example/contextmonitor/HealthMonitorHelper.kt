@@ -206,7 +206,7 @@ fun respiratoryRateCalculator(
 
     Log.d("RespRate", "Respiratory rate calculation complete: $result breaths/min")
     return result
-}
+}//added a change
 
 // Alternative respiratory rate calculator that focuses on periodic patterns
 fun alternativeRespiratoryRateCalculator(
