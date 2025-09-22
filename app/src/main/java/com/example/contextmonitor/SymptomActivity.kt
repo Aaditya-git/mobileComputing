@@ -6,38 +6,52 @@ import android.widget.RatingBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+
+private lateinit var healthRepository: HealthRepository
 class SymptomActivity : AppCompatActivity() {
-    private var heartRate: Int = 0
-    private var respiratoryRate: Int = 0
+    private lateinit var healthRepository: HealthRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_symptom)
 
-        // Get values from intent
-        heartRate = intent.getIntExtra("HEART_RATE", 0)
-        respiratoryRate = intent.getIntExtra("RESPIRATORY_RATE", 0)
+        // Initialize repository
+        val healthDataDao = AppDatabase.getDatabase(application).healthDataDao()
+        healthRepository = HealthRepository(healthDataDao)
 
         val uploadButton = findViewById<Button>(R.id.uploadButton)
         uploadButton.setOnClickListener {
-            // Get ratings from all RatingBars
-            val feverRating = findViewById<RatingBar>(R.id.feverRating).rating.toInt()
-            val coughRating = findViewById<RatingBar>(R.id.coughRating).rating.toInt()
-            val shortnessOfBreathRating = findViewById<RatingBar>(R.id.shortnessOfBreathRating).rating.toInt()
-            val fatigueRating = findViewById<RatingBar>(R.id.fatigueRating).rating.toInt()
-            val muscleAchesRating = findViewById<RatingBar>(R.id.muscleAchesRating).rating.toInt()
-            val headacheRating = findViewById<RatingBar>(R.id.headacheRating).rating.toInt()
-            val soreThroatRating = findViewById<RatingBar>(R.id.soreThroatRating).rating.toInt()
-            val lossOfTasteOrSmellRating = findViewById<RatingBar>(R.id.lossOfTasteOrSmellRating).rating.toInt()
-            val congestionRating = findViewById<RatingBar>(R.id.congestionRating).rating.toInt()
-            val nauseaRating = findViewById<RatingBar>(R.id.nauseaRating).rating.toInt()
+            lifecycleScope.launch {
+                // Get the latest health data record
+                val latestData = healthRepository.getLatestHealthData()
 
-            // TODO: Store these ratings in the database along with heart rate and respiratory rate
-            // For now, show a toast with all data
-            Toast.makeText(this, "Heart Rate: $heartRate, Respiratory Rate: $respiratoryRate, Symptoms uploaded", Toast.LENGTH_SHORT).show()
+                if (latestData != null) {
+                    val updatedData = latestData.copy(
+                        fever = findViewById<RatingBar>(R.id.feverRating).rating.toInt(),
+                        cough = findViewById<RatingBar>(R.id.coughRating).rating.toInt(),
+                        shortnessOfBreath = findViewById<RatingBar>(R.id.shortnessOfBreathRating).rating.toInt(),
+                        fatigue = findViewById<RatingBar>(R.id.fatigueRating).rating.toInt(),
+                        muscleAches = findViewById<RatingBar>(R.id.muscleAchesRating).rating.toInt(),
+                        headache = findViewById<RatingBar>(R.id.headacheRating).rating.toInt(),
+                        soreThroat = findViewById<RatingBar>(R.id.soreThroatRating).rating.toInt(),
+                        lossOfTasteOrSmell = findViewById<RatingBar>(R.id.lossOfTasteOrSmellRating).rating.toInt(),
+                        congestion = findViewById<RatingBar>(R.id.congestionRating).rating.toInt(),
+                        nausea = findViewById<RatingBar>(R.id.nauseaRating).rating.toInt()
+                    )
 
-            // Finish the activity and go back to MainActivity
-            finish()
+                    // Delete the old record and insert the updated one
+                    healthRepository.deleteAll()
+                    healthRepository.insert(updatedData)
+
+                    Toast.makeText(this@SymptomActivity, "Health data saved successfully", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@SymptomActivity, "No health data found to update", Toast.LENGTH_SHORT).show()
+                }
+
+                finish()
+            }
         }
     }
 }

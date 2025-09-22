@@ -18,6 +18,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 class SignMonitoringActivity : AppCompatActivity() {
+    private lateinit var healthRepository: HealthRepository
     private var heartRateMeasured = false
     private var respiratoryRateMeasured = false
     private var heartRateValue: Int = 0
@@ -33,6 +34,10 @@ class SignMonitoringActivity : AppCompatActivity() {
         val heartRateStatus = findViewById<TextView>(R.id.heartRateStatus)
         val respiratoryRateStatus = findViewById<TextView>(R.id.respiratoryRateStatus)
 
+        // Initialize database components
+        val healthDataDao = AppDatabase.getDatabase(application).healthDataDao()
+        healthRepository = HealthRepository(healthDataDao)
+
         heartRateButton.setOnClickListener {
             heartRateButton.isEnabled = false
             lifecycleScope.launch {
@@ -42,8 +47,14 @@ class SignMonitoringActivity : AppCompatActivity() {
                     if (videoUri != null) {
                         Log.d("HeartRate", "Video URI: $videoUri")
                         heartRateValue = heartRateCalculator(videoUri, contentResolver)
-                        heartRateMeasured = true
-                        heartRateStatus.text = "Measured: $heartRateValue bpm"
+
+                        if (heartRateValue == -1) {
+                            Toast.makeText(this@SignMonitoringActivity, "Failed to calculate heart rate. Video might be too short or invalid.", Toast.LENGTH_LONG).show()
+                            heartRateStatus.text = "Measurement failed"
+                        } else {
+                            heartRateMeasured = true
+                            heartRateStatus.text = "Measured: $heartRateValue bpm"
+                        }
                     } else {
                         Toast.makeText(this@SignMonitoringActivity, "Failed to load video. Check Logcat for details.", Toast.LENGTH_LONG).show()
                     }
@@ -65,7 +76,10 @@ class SignMonitoringActivity : AppCompatActivity() {
                     val accelX = readCSVFromAssets("CSVBreatheX.csv")
                     val accelY = readCSVFromAssets("CSVBreatheY.csv")
                     val accelZ = readCSVFromAssets("CSVBreatheZ.csv")
-                    respiratoryRateValue = respiratoryRateCalculator(accelX, accelY, accelZ)
+
+                    // Try the alternative algorithm
+                    respiratoryRateValue = alternativeRespiratoryRateCalculator(accelY)
+
                     respiratoryRateMeasured = true
                     respiratoryRateStatus.text = "Measured: $respiratoryRateValue breaths/min"
                 } catch (e: Exception) {
@@ -78,21 +92,29 @@ class SignMonitoringActivity : AppCompatActivity() {
         }
 
         nextButton.setOnClickListener {
-            // Pass the measured values to SymptomActivity
-            val intent = Intent(this, SymptomActivity::class.java).apply {
-                putExtra("HEART_RATE", heartRateValue)
-                putExtra("RESPIRATORY_RATE", respiratoryRateValue)
+            lifecycleScope.launch {
+                val healthData = HealthData(
+                    heartRate = heartRateValue,
+                    respiratoryRate = respiratoryRateValue
+                    // Symptoms will be 0 initially, updated in SymptomActivity
+                )
+                healthRepository.insert(healthData)
+
+                val intent = Intent(this@SignMonitoringActivity, SymptomActivity::class.java).apply {
+                    putExtra("HEART_RATE", heartRateValue)
+                    putExtra("RESPIRATORY_RATE", respiratoryRateValue)
+                }
+                startActivity(intent)
             }
-            startActivity(intent)
         }
     }
 
     private suspend fun copyVideoFromAssetsToStorage(fileName: String): Uri? = withContext(Dispatchers.IO) {
-        val file = File(filesDir, fileName)
+        val file = File(filesDir, fileName) // filesDir is available in Activity context
         try {
             // Check if asset exists
             val assetExists = try {
-                assets.open(fileName).close()
+                assets.open(fileName).close() // assets is available in Activity context
                 true
             } catch (e: IOException) {
                 false
@@ -106,7 +128,7 @@ class SignMonitoringActivity : AppCompatActivity() {
             if (!file.exists()) {
                 assets.open(fileName).use { inputStream ->
                     FileOutputStream(file).use { outputStream ->
-                        inputStream.copyTo(outputStream)
+                        inputStream.copyTo(outputStream) // This should work now
                     }
                 }
                 Log.d("AssetLoading", "Copied $fileName from assets to ${file.absolutePath}")
