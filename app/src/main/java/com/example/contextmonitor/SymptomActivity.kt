@@ -42,8 +42,7 @@ class SymptomActivity : AppCompatActivity() {
                     )
 
                     // Delete the old record and insert the updated one
-                    healthRepository.deleteAll()
-                    healthRepository.insert(updatedData)
+                    healthRepository.update(updatedData)
 
                     Toast.makeText(this@SymptomActivity, "Health data saved successfully", Toast.LENGTH_SHORT).show()
                 } else {

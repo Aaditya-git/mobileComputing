@@ -21,4 +21,8 @@ class HealthRepository(private val healthDataDao: HealthDataDao) {
     suspend fun deleteAll() {
         healthDataDao.deleteAll()
     }
+
+    suspend fun update(healthData: HealthData){
+        healthDataDao.update(healthData)
+    }
 }

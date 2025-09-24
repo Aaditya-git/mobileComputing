@@ -5,13 +5,16 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.lifecycle.LiveData
 import androidx.room.Delete
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 //added a change
 @Dao
 interface HealthDataDao {
     @Insert
-    suspend fun insert(healthData: HealthData)
+    suspend fun insert(healthData: HealthData): Long
+    @Update
+    suspend fun update(healthData: HealthData)
 
     @Query("SELECT * FROM health_data ORDER BY timestamp DESC")
     fun getAllHealthData(): Flow<List<HealthData>>
@@ -20,5 +23,5 @@ interface HealthDataDao {
     suspend fun getLatestHealthData(): HealthData?
 
     @Query("DELETE FROM health_data")
-    suspend fun deleteAll()
+    suspend fun deleteAll(): Int
 }
