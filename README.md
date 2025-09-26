@@ -1,1 +1,32 @@
-# mobileComputing
+# Mobile Computing: Project one 
+Aaditya Bhilegaonkar - 1233563489
+
+Q.1 Specify what Specifications you should provide to the Health-Dev framework to develop the code ideally.
+If I have a good idea for an app like Project 1 but I am not good at coding, and I find the Health-Dev paper, I would need to tell Health-Dev exactly what I want my app to do. I would not write code. Instead, I would give it a kind of blueprint.
+
+First, I need to specify the sensors. My app uses the phone's camera and its accelerometer. So I would tell Health-Dev: there is a camera sensor that must record a video for 45 seconds with the flash on. And there is an accelerometer sensor that must collect movement data for 45 seconds.
+
+Next, I need to specify what to do with the sensor data. This is the processing part. For the camera video, I need an algorithm that can calculate the heart rate from the color changes in the video. For the accelerometer data, I need a different algorithm that can calculate the breathing rate from the small movements. I would just tell Health-Dev the names of these algorithms, like "heart_rate_from_video" and "respiratory_rate_from_motion". Health-Dev already has a collection of algorithms, so it can find the right one. There is one module which i felt interesting -> Code generation module, I would like to use that here.
+
+Then, I need to specify the phone app itself. I would describe the screens. The first screen needs two buttons: one to start recording health data and one to delete all data from the database. The second screen should show the results of the heart rate and breathing rate. The third screen should have a list of symptoms for the user to rate. I would also need to describe the database where all this information will be stored, which has 12 fields for the 10 symptoms and the two vital signs.
+
+Finally, I need to connect everything. I would specify that the heart rate number from the algorithm goes into the database. The breathing rate number also goes into the database. When the user clicks the "upload symptoms" button, their ratings are saved in the database. When the user clicks "delete all data", the database is cleared.
+
+By giving Health-Dev this detailed blueprint, it can automatically write all the complex code for the sensors, the algorithms, and the phone app for me. This is the ideal way to use the framework. I just describe the system, and Health-Dev builds it.
+
+
+Q.2 how can you provide feedback to the user and develop a novel application to improve context sensing and use that to generate the model of the user? 
+The Project 1 app is good for collecting data, but it stops there. The bHealthy paper shows us how to use that data to actually help the user. Right now, we store symptoms and vital signs on the phone. Using bHealthy's ideas, we can turn this simple app into a smart health coach.
+
+First, we can provide feedback to the user by adding an assessment feature like in bHealthy. After measuring the heart rate, we could calculate Heart Rate Variability (HRV) from the data. HRV is a good sign of stress. So, instead of just showing a number, the app can give a message like for example, "Your heart rate pattern is leading high stress. Consider a 5-minute breathing exercise." This is immediate, useful feedback.
+
+Second, we can develop a novel application by adding a training module inspired by bHealthy's PETPeeves. We could create a virtual pet for the user. But instead of exercise, the pet's health is tied to the user's symptom logs and vital signs. If the user consistently reports feeling good and their vital signs are stable, the pet is happy and healthy. If the user reports many symptoms like headache or fatigue, the pet might look sad. This creates a simple, visual feedback loop that encourages the user to be more engaged with their health.
+
+To improve context sensing and build a user model, we need to connect the different data points. The real power is not in the individual data, but in the patterns. For e.g., the app could notice that every time the user reports a symptom(let's say headache), their heart rate is also a little higher. After seeing this pattern many times, the app can build a personal model for the user. It could then give a warning: "Your current heart rate is high, which can lead to a headache for you. Maybe take a break now to prevent it."
+
+Finally, like the bHealthy wellness report, our app could generate a simple weekly score from 1 to 10. This score would be based on the average of their symptom score, the  vital signs, and how often they used the app. (This is very similar to time and well-being in your phone settings). This will give the user a simple way to see if they are getting better or worse over time. So, that is how we can use bHealthy's concepts to get better insights from the data.
+
+
+Q.3 A common assumption is mobile computing is mostly about app development. After completing Project 1 and reading both papers, have your views changed?
+Yes, my view has changed a lot after finishing Project 1 and reading the two papers. Before, I thought mobile computing was mostly about app development, meaning just designing the screen and writing the code that runs on the phone. But now I see that is a very small part of it. My understanding became much deeper after I actually went to a Samsung event recently and tried developing a small application for a Samsung watch. This experience, combined with the project, showed me that mobile computing is really about creating a complete system. The real work is not just the app you see. For the watch, the big challenge was dealing with the sensors, like the heart rate monitor, and making sure the app does not drain the battery too fast. This is exactly what the Health-Dev paper talks about. It is about modeling the whole system, the sensors, the battery life, and the communication between devices before even writing a single line of code for the app. This is systems engineering. Then, the bHealthy paper shows that the app itself needs to be smart. It is not just a data collector. It has to understand the sensor data, like using brainwaves to help someone relax, which is a complex algorithm, not just a simple button click. So, mobile computing is this big combination of hardware integration, sensor data processing, power management, and human-centered design. The app on the screen is just the final piece that the user interacts with. It is like the tip of an iceberg. My hands-on experience at the Samsung event confirmed this; I was not just building an interface, I was working on a small part of a much larger and more complex system that includes the watch's hardware and its health tracking capabilities.
+
