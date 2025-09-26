@@ -1,10 +1,8 @@
 # macOS system files
 .DS_Store
-
-# IDE configs
+local.properties
 .idea/
 
-# Assets you don’t want in repo
 app/src/main/assets/*.csv
 app/src/main/assets/*.mp4
 

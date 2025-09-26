@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ContextMonitor" >
         <activity
-            android:name=".SymptomActivity"
+            android:name=".activities.SymptomScreen"
             android:exported="false" />
         <activity
-            android:name=".SignMonitoringActivity"
+            android:name=".activities.measurementScreen"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.Main"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ContextMonitor" >
